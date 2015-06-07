@@ -19,11 +19,11 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <a href="/list"><img src="http://pingendo.github.io/pingendo-bootstrap/assets/placeholder.png" class="img-responsive"></a>
-                <h3>A title</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,&nbsp;</p>
+            <div class="col-md-4" ng-repeat="gallery in galleries">
+                <a href="/list/{{gallery.state}}"><img ng-src="{{gallery.image}}" class="img-responsive image-gallery"></a>
+                <h3>{{gallery.name}}</h3>
+                <p>{{gallery.info}}</p>
             </div>            
-        </div>
+        </div>        
     </div>
 </div>

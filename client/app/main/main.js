@@ -14,7 +14,7 @@ angular.module('App')
       	controller: 'GalleryCtrl'
       })
       .state('list', {
-      	url: '/list',
+      	url: '/list/:state',
       	templateUrl: 'app/main/list/list.html',
       	controller: 'ListCtrl'
       })
