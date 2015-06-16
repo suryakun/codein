@@ -1,22 +1,19 @@
 'use strict';
 
 angular.module('App')
-  .controller('AdminCtrl', function ($scope, $http, Auth, User, gallery) {
+  .controller('AdminCtrl', function ($scope, $http, Auth, User, gallery, socket) {
 
     // Use the User $resource to fetch all users
     $scope.users = User.query();
     $scope.galleries = [];
     
     gallery.getAll().then(function(data){
-      console.log(data);
       $scope.galleries = data;      
     });
 
     $scope.save = function(form) {
       gallery.save(form).then(function(status) {
-        if (status) {
-          console.log(form);
-        };
+        socket.syncUpdates('gallery', $scope.galleries);
       });
     }
 

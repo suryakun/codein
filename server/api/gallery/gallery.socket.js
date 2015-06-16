@@ -8,11 +8,16 @@ var Gallery = require('./gallery.model');
 
 exports.register = function(socket) {
   Gallery.schema.post('save', function (doc) {
-    onSave(socket, doc);
+  	console.log(doc);
+    sendToAdmin(socket, doc);
   });
   Gallery.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
+}
+
+function sendToAdmin(socket, doc, cb){
+	socket.emit('gallery:toAdmin', doc);
 }
 
 function onSave(socket, doc, cb) {

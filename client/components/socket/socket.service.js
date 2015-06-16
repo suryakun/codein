@@ -51,6 +51,23 @@ angular.module('App')
           cb(event, item, array);
         });
 
+        //sync data to admin
+        socket.on(modelName + ':toAdmin', function (item) {
+          var oldItem = _.find(array, {_id: item._id});
+          var index = array.indexOf(oldItem);
+          var event = 'created';
+          // replace oldItem if it exists
+          // otherwise just add item to the collection
+          if (oldItem) {
+            array.splice(index, 1, item);
+            event = 'updated';
+          } else {
+            array.push(item);
+          }
+
+          cb(event, item, array);
+        });
+
         /**
          * Syncs removed items on 'model:remove'
          */
