@@ -7,22 +7,15 @@ angular.module('App')
     $scope.users = User.query();
     $scope.galleries = [];
     
-    gallery.getAll().then(function(data){
-      $scope.galleries = data;      
-    });
+    gallery.getAll().success(function(data) {
+      $scope.galleries = data;
+      socket.synctoAdmin('gallery', $scope.galleries);
+    });    
 
     $scope.save = function(form) {
-      gallery.save(form).then(function(status) {
-        socket.syncUpdates('gallery', $scope.galleries);
+      gallery.save(form).success(function() {
+        console.log('saved');
       });
     }
 
-    $scope.delete = function(user) {
-      User.remove({ id: user._id });
-      angular.forEach($scope.users, function(u, i) {
-        if (u === user) {
-          $scope.users.splice(i, 1);
-        }
-      });
-    };
   });
