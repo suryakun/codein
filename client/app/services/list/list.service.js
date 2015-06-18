@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('applicationApp')
+angular.module('App')
   .service('list', function ($http) {
     
     function list() {
@@ -17,8 +17,8 @@ angular.module('applicationApp')
         return $http.get('/api/lists/'+id )
       }
 
-      this.update = function(id) {
-        return $http.put('/api/lists/' + id);
+      this.update = function(data) {
+        return $http.put('/api/lists/', data);
       }
 
     }

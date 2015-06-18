@@ -19,4 +19,25 @@ angular.module('App')
       });
     }
 
+  })
+
+  .controller('AdminListCtrl', function($scope, Auth, User, socket, list){
+    $scope.lists = [];
+
+    list.getAll().success(function(data) {
+      $scope.lists = data;
+    });
+
+    $scope.save = function(form) {
+      list.save(form).success(function() {
+        console.log('saved');
+      });
+    }
+
+    $scope.update = function(id, form) {
+      list.update(form).success(function() {
+        console.log('saved');
+      });
+    }
+
   });

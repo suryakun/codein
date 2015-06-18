@@ -72,7 +72,6 @@ angular.module('App')
       },
 
       synctoAdmin: function(modelName, array) {
-        console.log('execute data from socket');
         socket.on(modelName + ':toAdmin', function(item){
           var oldItem = _.find(array, {_id: item._id});
           var index = array.indexOf(oldItem);
