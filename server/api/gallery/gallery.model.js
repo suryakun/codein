@@ -8,7 +8,8 @@ var GallerySchema = new Schema({
   info: String,
   image: String,
   state: String,
-  active: Boolean
+  active: Boolean,
+  created_at: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('Gallery', GallerySchema);

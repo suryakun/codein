@@ -6,6 +6,7 @@ angular.module('App')
     // Use the User $resource to fetch all users
     $scope.users = User.query();
     $scope.galleries = [];
+    $scope.casts = [];
     
     gallery.getAll().success(function(data) {
       $scope.galleries = data;
@@ -14,7 +15,7 @@ angular.module('App')
 
     $scope.save = function(form) {
       gallery.save(form).success(function() {
-        console.log('saved');
+        console.info('saved');
       });
     }
 

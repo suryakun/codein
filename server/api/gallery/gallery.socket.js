@@ -16,7 +16,6 @@ exports.register = function(socket) {
 }
 
 function sendToAdmin(socket, doc, cb){
-    console.log(doc);
 	socket.emit('gallery:toAdmin', doc);
 }
 

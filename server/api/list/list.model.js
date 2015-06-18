@@ -13,7 +13,8 @@ var ListSchema = new Schema({
   creator: String,
   source: String,
   state: String,
-  active: Boolean
+  active: Boolean,
+  created_at: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model('List', ListSchema);
