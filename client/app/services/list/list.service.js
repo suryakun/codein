@@ -23,6 +23,6 @@ angular.module('App')
 
     }
 
-    return list();
+    return list;
 
   });

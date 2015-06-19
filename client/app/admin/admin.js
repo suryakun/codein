@@ -8,8 +8,8 @@ angular.module('App')
         templateUrl: 'app/admin/admin.gallery.html',
         controller: 'AdminCtrl'
       })
-      .state('admin.gallery', {
-      	url: '/admin/gallery/:id',
+      .state('listgallery', {
+      	url: '/admin/:id',
       	templateUrl: 'app/admin/admin.list.html',
       	controller: 'AdminListCtrl'
       })

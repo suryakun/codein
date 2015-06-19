@@ -8,7 +8,7 @@ angular.module('App')
     $scope.galleries = [];
     $scope.casts = [];
     
-    gallery.getAll().success(function(data) {
+    gallery.getAll.success(function(data) {
       $scope.galleries = data;
       socket.synctoAdmin('gallery', $scope.galleries);
     });    
