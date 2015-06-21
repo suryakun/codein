@@ -5,10 +5,10 @@ var mongoose = require('mongoose'),
 
 var ListSchema = new Schema({
 	gallery_id: { 
-		type: Schema.Types.ObjectId,
+		type: String,
 		ref: 'Gallery'
 	},
-  name: String,
+  title: String,
   info: String,
   creator: String,
   source: String,

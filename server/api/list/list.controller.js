@@ -54,6 +54,16 @@ exports.destroy = function(req, res) {
   });
 };
 
+// find data by gallery id
+exports.findByGalleryId = function(req, res) {
+  List.find({'gallery_id': req.params.id}, function(err, list) {
+    if (err) { return handleError(res, err) };
+    if (!list) { return res.send(404); };
+    return res.json(list);
+  })
+}
+
+
 function handleError(res, err) {
   return res.send(500, err);
 }

@@ -1,49 +1,134 @@
-<div class="section" ng-if="stateLists">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Username</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <ul class="pagination">
-                    <li>
-                        <a href="#">Prev</a>
-                    </li>
-                    <li>
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">Next</a>
-                    </li>
-                </ul>
+<div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li>
+                                <a href="#">Home</a>
+                            </li>
+                            <li>
+                                <a href="#">Library</a>
+                            </li>
+                            <li class="active">Data</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalAddScreencast">Add Screencast</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                    <th>Info</th>
+                                    <th>Creator</th>
+                                    <th>Source</th>
+                                    <th>Created At</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="list in lists">
+                                    <td></td>
+                                    <td>{{list.title}}</td>
+                                    <td>{{list.info}}</td>
+                                    <td>{{list.creator}}</td>
+                                    <td>{{list.source}}</td>
+                                    <td>{{list.created_at}}</td>
+                                    <td>
+                                        <a class="btn btn-default">Edit</a>
+                                        <a class="btn btn-default">Remove</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <ul class="pagination" ng-show="lists.length > 10">
+                            <li>
+                                <a href="#">Prev</a>
+                            </li>
+                            <li>
+                                <a href="#">1</a>
+                            </li>
+                            <li>
+                                <a href="#">2</a>
+                            </li>
+                            <li>
+                                <a href="#">3</a>
+                            </li>
+                            <li>
+                                <a href="#">4</a>
+                            </li>
+                            <li>
+                                <a href="#">5</a>
+                            </li>
+                            <li>
+                                <a href="#">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalAddScreencast" tabindex="-1" role="dialog" aria-labelledby="modalAddScreencast" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Add Add Screencast</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" name="formList" role="form" novalidate >
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputEmail3" class="control-label">Title</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="title" ng-model="form.title" required>
+                                    <div ng-show="formList.title.$error.required && formList.title.$dirty" class="alert alert-danger">This Title is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputEmail3" class="control-label">Info</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <textarea name="info" class="form-control" ng-model="form.info" required></textarea>
+                                    <div ng-show="formList.info.$error.required && formList.info.$dirty" class="alert alert-danger">This Info is required</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputEmail3" class="control-label">Source</label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="source" ng-model="form.source" required>
+                                    <div ng-show="formList.source.$error.required && formList.source.$dirty" class="alert alert-danger">This Source is required</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                        <a class="btn btn-primary" ng-click="save(form)" ng-show="formList.$error">Save</a>
+                    </div>
+                </div>
+            </div>
+        </div>

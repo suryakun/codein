@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var GallerySchema = new Schema({
+  _id: {type: String, required: true, unique: true },
   name: String,
   info: String,
   image: String,

@@ -8,7 +8,7 @@ angular.module('App')
     $scope.galleries = [];
     $scope.casts = [];
     
-    gallery.getAll.success(function(data) {
+    gallery.getAll().success(function(data) {
       $scope.galleries = data;
       socket.synctoAdmin('gallery', $scope.galleries);
     });    
@@ -21,22 +21,36 @@ angular.module('App')
 
   })
 
-  .controller('AdminListCtrl', function($scope, Auth, User, socket, list){
+  .controller('AdminListCtrl', function($scope, $http, $stateParams, Auth, User, socket, list, gallery){
     $scope.lists = [];
 
-    list.getAll().success(function(data) {
+    list.findByGalleryId($stateParams.id).success(function(data) {
       $scope.lists = data;
+      socket.synctoAdmin('list', $scope.lists);
     });
 
     $scope.save = function(form) {
-      list.save(form).success(function() {
-        console.log('saved');
+      var gallery_id = $stateParams.id;
+
+      gallery.findById(gallery_id).success(function(id) {
+        form.gallery_id = gallery_id;
+        list.save(form).success(function() {
+          for(var key in form) {
+            form[key] = '';
+          }
+        });
       });
+
     }
 
-    $scope.update = function(id, form) {
-      list.update(form).success(function() {
-        console.log('saved');
+    $scope.update = function(form, gallery) {
+      var gallery_id = $stateParams.id;
+
+      gallery.findById(gallery_id).success(function(id) {
+        form.gallery_id = gallery_id;
+        list.update(form).success(function() {
+          console.log('saved');
+        });
       });
     }
 

@@ -1,10 +1,9 @@
 'use strict';
 
 angular.module('App')
-  .service('list', function ($http) {
-    
+  .service('list', function ($http, $q) {
+
     function list() {
-      
       this.getAll = function() {
         return $http.get('/api/lists');
       }    
@@ -21,8 +20,12 @@ angular.module('App')
         return $http.put('/api/lists/', data);
       }
 
+      this.findByGalleryId = function(id) {
+        return $http.get('/api/lists/gallery/'+ id);
+      }
+
     }
 
-    return list;
+    return new list;
 
   });
