@@ -24,6 +24,7 @@ angular.module('App')
   //======================= controller list =================================
   .controller('AdminListCtrl', function($scope, $http, $stateParams, Auth, User, socket, list, gallery){
     $scope.lists = [];
+    $scope.buttonSave = undefined;
 
     list.findByGalleryId($stateParams.id).success(function(data) {
       $scope.lists = data;
@@ -31,13 +32,12 @@ angular.module('App')
     });
 
     $scope.setForm = function() {
+      // $scope.buttonSave = true;
       angular.element("input").val('');
       angular.element("textarea").val('');
     }
 
     $scope.save = function(form) {
-      // console.log(form);
-      // return false;
       var gallery_id = $stateParams.id;
 
       gallery.findById(gallery_id).success(function(id) {
@@ -52,10 +52,11 @@ angular.module('App')
     }
 
     $scope.setUpdate = function(list) {
+      $scope.buttonSave = false;
       $scope.form = angular.copy(list);
     }
 
-    $scope.update = function(form, gallery) {
+    $scope.update = function(form) {
       var gallery_id = $stateParams.id;
 
       gallery.findById(gallery_id).success(function(id) {

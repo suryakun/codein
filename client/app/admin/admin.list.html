@@ -127,7 +127,8 @@
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-default" data-dismiss="modal">Cancel</a>
-                        <a class="btn btn-primary" ng-click="save(form)" name="submit" ng-show="formList.$error">Save</a>
+                        <a class="btn btn-primary" ng-show="(buttonSave=true)" ng-click="save(form)" name="submit" >Save</a>
+                        <a class="btn btn-primary" ng-show="(buttonSave=false)" ng-click="update(form)" >Update</a>
                     </div>
                 </div>
             </div>
