@@ -32,9 +32,12 @@ angular.module('App')
 
     $scope.setForm = function() {
       angular.element("input").val('');
+      angular.element("textarea").val('');
     }
 
     $scope.save = function(form) {
+      // console.log(form);
+      // return false;
       var gallery_id = $stateParams.id;
 
       gallery.findById(gallery_id).success(function(id) {
