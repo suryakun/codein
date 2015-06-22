@@ -21,6 +21,7 @@ angular.module('App')
 
   })
 
+  //======================= controller list =================================
   .controller('AdminListCtrl', function($scope, $http, $stateParams, Auth, User, socket, list, gallery){
     $scope.lists = [];
 
@@ -28,6 +29,10 @@ angular.module('App')
       $scope.lists = data;
       socket.synctoAdmin('list', $scope.lists);
     });
+
+    $scope.setForm = function() {
+      angular.element("input").val('');
+    }
 
     $scope.save = function(form) {
       var gallery_id = $stateParams.id;
@@ -41,6 +46,10 @@ angular.module('App')
         });
       });
 
+    }
+
+    $scope.setUpdate = function(list) {
+      $scope.form = angular.copy(list);
     }
 
     $scope.update = function(form, gallery) {
