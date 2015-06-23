@@ -24,7 +24,8 @@ angular.module('App')
   //======================= controller list =================================
   .controller('AdminListCtrl', function($scope, $http, $stateParams, Auth, User, socket, list, gallery){
     $scope.lists = [];
-    $scope.buttonSave = undefined;
+    $scope.buttonSave = true;
+    $scope.confirm = 'Saved';
 
     list.findByGalleryId($stateParams.id).success(function(data) {
       $scope.lists = data;
@@ -32,7 +33,7 @@ angular.module('App')
     });
 
     $scope.setForm = function() {
-      // $scope.buttonSave = true;
+      $scope.buttonSave = true;
       angular.element("input").val('');
       angular.element("textarea").val('');
     }
@@ -40,12 +41,14 @@ angular.module('App')
     $scope.save = function(form) {
       var gallery_id = $stateParams.id;
 
-      gallery.findById(gallery_id).success(function(id) {
+      gallery.findById(gallery_id).success(function(data) {
+        if (!data) return false;
         form.gallery_id = gallery_id;
         list.save(form).success(function() {
           for(var key in form) {
             form[key] = '';
           }
+          $scope.confirm = 'Saved';
         });
       });
 
@@ -59,11 +62,18 @@ angular.module('App')
     $scope.update = function(form) {
       var gallery_id = $stateParams.id;
 
-      gallery.findById(gallery_id).success(function(id) {
+      gallery.findById(gallery_id).success(function(data) {
+        if (!data) return false;
         form.gallery_id = gallery_id;
         list.update(form).success(function() {
-          console.log('saved');
+          $scope.confirm = 'Updated';
         });
+      });
+    }
+
+    $scope.delete = function(id){
+      list.delete(id).success(function() {
+       $scope.confirm = 'Deleted'; 
       });
     }
 

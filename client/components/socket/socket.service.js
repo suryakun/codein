@@ -83,8 +83,10 @@ angular.module('App')
           } else {
             array.push(item);
           }
+        });
 
-          console.log(item);
+        socket.on(modelName + ':remove', function(item){
+          _.remove(array, {_id: item._id});
         });
       }
     };

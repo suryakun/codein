@@ -17,11 +17,15 @@ angular.module('App')
       }
 
       this.update = function(data) {
-        return $http.put('/api/lists/', data);
+        return $http.put('/api/lists/'+ data._id, data);
       }
 
       this.findByGalleryId = function(id) {
         return $http.get('/api/lists/gallery/'+ id);
+      }
+
+      this.delete = function(id) {
+        return $http.delete('/api/lists/'+ id);
       }
 
     }
