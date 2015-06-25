@@ -9,7 +9,11 @@ angular.module('App')
       }    
 
       this.save = function(data) {
-        return $http.post('/api/lists', data);
+        var formData = new FormData();
+        formData.append('file', data.source);
+        return $http.post('/api/lists', formData, {
+          headers: {'Content-Type' : undefined}
+        });
       }
 
       this.findById = function(id) {
