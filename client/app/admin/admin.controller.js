@@ -44,12 +44,13 @@ angular.module('App')
       gallery.findById(gallery_id).success(function(data) {
         if (!data) return false;
         form.gallery_id = gallery_id;
-        list.save(form).success(function() {
-          for(var key in form) {
-            form[key] = '';
-          }
-          $scope.confirm = 'Saved';
-        });
+        list.save(form);
+        // list.save(form).success(function() {
+        //   for(var key in form) {
+        //     form[key] = '';
+        //   }
+        //   $scope.confirm = 'Saved';
+        // });
       });
 
     }

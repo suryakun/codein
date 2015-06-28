@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('App')
-  .service('list', function ($http, $q) {
+  .service('list', function ($http, $q, $location) {
 
     function list() {
       this.getAll = function() {
@@ -10,10 +10,18 @@ angular.module('App')
 
       this.save = function(data) {
         var formData = new FormData();
-        formData.append('file', data.source);
-        return $http.post('/api/lists', formData, {
-          headers: {'Content-Type' : undefined}
-        });
+        formData.append('source', data.source);
+        formData.append('gallery_id', data.gallery_id);
+        formData.append('title', data.title);
+        formData.append('info', data.info);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/lists');
+        xhr.send(formData);
+
+        // return $http.post('/api/lists', formData, {
+        //   headers: {'Content-Type' : undefined}
+        // });
       }
 
       this.findById = function(id) {

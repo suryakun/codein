@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var List = require('./list.model');
+var multiparty = require('multiparty');
 
 // Get list of lists
 exports.index = function(req, res) {
@@ -22,10 +23,15 @@ exports.show = function(req, res) {
 
 // Creates a new list in the DB.
 exports.create = function(req, res) {
-  List.create(req.body, function(err, list) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, list);
+  var form = new multiparty.Form();
+  form.parse(req, function(err, fields, files) {
+    if (err) console.log(err);
+    res.send(fields, files)
   });
+  // List.create(req.body, function(err, list) {
+  //   if(err) { return handleError(res, err); }
+  //   return res.json(201, list);
+  // });
 };
 
 // Updates an existing list in the DB.
