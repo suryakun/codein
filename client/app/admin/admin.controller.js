@@ -39,12 +39,13 @@ angular.module('App')
     }
 
     $scope.save = function(form) {
+      var progressbar = document.querySelector('.progress-bar');
       var gallery_id = $stateParams.id;
 
       gallery.findById(gallery_id).success(function(data) {
         if (!data) return false;
         form.gallery_id = gallery_id;
-        list.save(form);
+        list.save(form, progressbar);
         // list.save(form).success(function() {
         //   for(var key in form) {
         //     form[key] = '';

@@ -8,7 +8,7 @@ angular.module('App')
         return $http.get('/api/lists');
       }    
 
-      this.save = function(data) {
+      this.save = function(data, progress) {
         var formData = new FormData();
         formData.append('source', data.source);
         formData.append('gallery_id', data.gallery_id);
@@ -17,6 +17,12 @@ angular.module('App')
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/lists');
+        xhr.onprogress = function(evt) {
+          if (evt.lengthComputable) {
+            var percentComplete = (evt.loaded / evt.total) * 100;
+            progress.style.width = percentComplete + '%';
+          };
+        }
         xhr.send(formData);
 
         // return $http.post('/api/lists', formData, {
