@@ -26,12 +26,16 @@ exports.create = function(req, res) {
   var form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
     if (err) console.log(err);
-    res.send(fields, files)
+    var list = {
+      'title' : fields.title[0],
+      'gallery_id' : fields.gallery_id[0],
+      'info' : fields.info[0]
+    }
+    List.create(list, function(err, list) {
+      if(err) { return handleError(res, err); }
+      res.send(201,fields);
+    });
   });
-  // List.create(req.body, function(err, list) {
-  //   if(err) { return handleError(res, err); }
-  //   return res.json(201, list);
-  // });
 };
 
 // Updates an existing list in the DB.
