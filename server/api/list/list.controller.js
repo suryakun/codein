@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var List = require('./list.model');
 var multiparty = require('multiparty');
+var fs = require('fs');
 
 // Get list of lists
 exports.index = function(req, res) {
@@ -26,6 +27,9 @@ exports.create = function(req, res) {
   var form = new multiparty.Form();
   form.parse(req, function(err, fields, files) {
     if (err) console.log(err);
+    fs.createReadStream(files[0].path, function(err, file) {
+      console.log(file);
+    });
     var list = {
       'title' : fields.title[0],
       'gallery_id' : fields.gallery_id[0],

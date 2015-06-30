@@ -38,7 +38,8 @@ angular.module('App')
       angular.element("textarea").val('');
     }
 
-    $scope.save = function(form) {
+    $scope.save = function(form, formList) {
+      angular.element(".progress-bar").css('width','0%');
       var progressbar = document.querySelector('.progress-bar');
       var gallery_id = $stateParams.id;
 
@@ -46,14 +47,9 @@ angular.module('App')
         if (!data) return false;
         form.gallery_id = gallery_id;
         list.save(form, progressbar);
-        // list.save(form).success(function() {
-        //   for(var key in form) {
-        //     form[key] = '';
-        //   }
-        //   $scope.confirm = 'Saved';
-        // });
+        $scope.formList.$setPristine();
+        console.log();
       });
-
     }
 
     $scope.setUpdate = function(list) {
@@ -61,14 +57,15 @@ angular.module('App')
       $scope.form = angular.copy(list);
     }
 
-    $scope.update = function(form) {
+    $scope.update = function(form, formList) {
       var gallery_id = $stateParams.id;
-
+      angular.element(".progress-bar").css('width','0%');
       gallery.findById(gallery_id).success(function(data) {
         if (!data) return false;
         form.gallery_id = gallery_id;
         list.update(form).success(function() {
           $scope.confirm = 'Updated';
+          $scope.formList.$setPristine();
         });
       });
     }
