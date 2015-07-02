@@ -4,6 +4,7 @@ var _ = require('lodash');
 var List = require('./list.model');
 var multiparty = require('multiparty');
 var fs = require('fs');
+var path = require('path');
 
 // Get list of lists
 exports.index = function(req, res) {
@@ -24,12 +25,24 @@ exports.show = function(req, res) {
 
 // Creates a new list in the DB.
 exports.create = function(req, res) {
-  var form = new multiparty.Form();
+  var form = new multiparty.Form();  
+  var size, filename;
+
+  form.on('part', function(part) {
+    if (!part.filename) return false;
+    size = part.byteCount;
+    filename = part.filename;
+  });
+
+  form.on('file', function(name, file) {
+    var tmp_path = file.path;
+    var target_path = path.resolve(__dirname, '../../../client/assets/upload');
+    fs.renameSync(tmp_path, target_path + '/' + filename)
+    console.log(file, target_path + filename);
+  });
+
   form.parse(req, function(err, fields, files) {
     if (err) console.log(err);
-    fs.createReadStream(files[0].path, function(err, file) {
-      console.log(file);
-    });
     var list = {
       'title' : fields.title[0],
       'gallery_id' : fields.gallery_id[0],
