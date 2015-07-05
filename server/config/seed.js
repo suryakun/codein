@@ -39,11 +39,13 @@ Gallery.find({}).remove(function() {
 
 User.find({}).remove(function() {
   User.create({
+    _id: 'ASFASDKASJD7656AFSDASD',
     provider: 'local',
     name: 'Test User',
     email: 'test@test.com',
     password: 'test'
   }, {
+    _id: 'JKHJGKJGHGHH567576JGJH',
     provider: 'local',
     role: 'admin',
     name: 'Admin',

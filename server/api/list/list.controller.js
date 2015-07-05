@@ -27,31 +27,41 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var form = new multiparty.Form();  
   var size, filename;
-
-  form.on('part', function(part) {
-    if (!part.filename) return false;
-    size = part.byteCount;
-    filename = part.filename;
-  });
-
-  form.on('file', function(name, file) {
-    var tmp_path = file.path;
-    var target_path = path.resolve(__dirname, '../../../client/assets/upload');
-    fs.renameSync(tmp_path, target_path + '/' + filename)
-    console.log(file, target_path + filename);
-  });
+  var user = req.user;
+  var index = Math.floor(Math.random() * 10000) + 1;
 
   form.parse(req, function(err, fields, files) {
-    if (err) console.log(err);
-    var list = {
-      'title' : fields.title[0],
-      'gallery_id' : fields.gallery_id[0],
-      'info' : fields.info[0]
+    var filename = user._id + index;
+    var dir_upload = path.resolve(__dirname, '../../upload/'+ user._id);
+    var dir_file = dir_upload +'/' + filename + ".mp4";
+
+    if (err) res.send(500, 'Error Server');
+    if (files.hasOwnProperty('source')) {
+      if (files.source[0].headers['content-type'] !== 'video/mp4') res.send(400, 'Bad Request');
+
+      fs.exists( dir_upload , function(exist) {
+        if (!exist) {
+          fs.mkdirSync(dir_upload);            
+        }
+        fs.createReadStream(files.source[0].path).pipe(fs.createWriteStream(dir_file));
+      });
+
+      var list = {
+        'title' : fields.title[0],
+        'gallery_id' : fields.gallery_id[0],
+        'info' : fields.info[0],
+        'source' : filename
+      }
+
+      List.create(list, function(err, list) {
+        if(err) { return handleError(res, err); }
+        res.send(201,fields);
+      });
+
+    } else {
+      res.send(400, 'No File Found');
     }
-    List.create(list, function(err, list) {
-      if(err) { return handleError(res, err); }
-      res.send(201,fields);
-    });
+
   });
 };
 
