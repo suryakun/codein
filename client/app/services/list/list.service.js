@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('App')
-  .service('list', function ($http, $q, $location) {
+  .service('list', function ($http, $q, $location, $cookieStore) {
 
     function list() {
       this.getAll = function() {
@@ -17,17 +17,14 @@ angular.module('App')
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/api/lists');
+        xhr.setRequestHeader("Authorization", 'Bearer ' + $cookieStore.get("token"));
         xhr.onprogress = function(evt) {
           if (evt.lengthComputable) {
             var percentComplete = (evt.loaded / evt.total) * 100;
             progress.style.width = percentComplete + '%';
           };
         }
-        xhr.send(formData);
-
-        // return $http.post('/api/lists', formData, {
-        //   headers: {'Content-Type' : undefined}
-        // });
+        xhr.send(formData);        
       }
 
       this.findById = function(id) {

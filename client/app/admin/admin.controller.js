@@ -23,6 +23,7 @@ angular.module('App')
 
   //======================= controller list =================================
   .controller('AdminListCtrl', function($scope, $http, $stateParams, Auth, User, socket, list, gallery){
+    $scope.isDiggest = false;
     $scope.lists = [];
     $scope.buttonSave = true;
     $scope.confirm = 'Saved';
@@ -48,7 +49,7 @@ angular.module('App')
         form.gallery_id = gallery_id;
         list.save(form, progressbar);
         $scope.formList.$setPristine();
-        console.log();
+        $scope.isDiggest = true;
       });
     }
 
@@ -74,6 +75,12 @@ angular.module('App')
       list.delete(id).success(function() {
        $scope.confirm = 'Deleted'; 
       });
+    }
+
+    $scope.reloadForm = function(formList) {
+      $scope.setForm();
+      $scope.formList.$setPristine();
+      angular.element(".progress-bar").css('width','0%');
     }
 
   });

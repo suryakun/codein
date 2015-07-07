@@ -122,8 +122,8 @@
                                     <input type="file" class="form-control" file name="source" file-model="form.source" ng-init="form.source=''" required>
                                     <div ng-show="formList.source.$error.required && formList.source.$dirty" class="alert alert-danger">This Source is required</div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:0%">
-                                            <span class="sr-only">70% Complete</span>
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                            <span class="sr-only">0% Complete</span>
                                         </div>
                                     </div>
                                 </div>
@@ -132,8 +132,9 @@
                     </div>
                     <div class="modal-footer">
                         <a class="btn btn-default" data-dismiss="modal">Cancel</a>
-                        <a class="btn btn-primary" ng-show="(buttonSave==true)" ng-click="save(form)" name="submit" >Save</a>
-                        <a class="btn btn-primary" ng-show="(buttonSave==false)" ng-click="update(form)" >Update</a>
+                        <a class="btn btn-default" ng-show="isDiggest" ng-click="reloadForm(formList)">Upload Again</a>
+                        <a class="btn btn-primary" ng-show="(buttonSave==true && !isDiggest)" ng-click="save(form)" name="submit" >Save</a>
+                        <a class="btn btn-primary" ng-show="(buttonSave==false && !isDiggest)" ng-click="update(form)" >Update</a>
                     </div>
                 </div>
             </div>
