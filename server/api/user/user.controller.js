@@ -4,6 +4,25 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var nodemailer = require('nodemailer');
+var crypto = require('crypto'),
+    algorithm = 'aes-256-ctr',
+    password = 'ilovejavascript';
+
+
+var encrypt = function(text){
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+var decrypt = function(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
 
 var validationError = function(res, err) {
   return res.json(422, err);
@@ -98,4 +117,37 @@ exports.me = function(req, res, next) {
  */
 exports.authCallback = function(req, res, next) {
   res.redirect('/');
+};
+
+/**
+ * Send mail register for verification
+ */
+exports.sendMail = function(req, res, next) {
+  var user = req.body;
+  var encrypted = encrypt(user.email);
+  var link = req.headers.host + encrypted;
+
+  var transport = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'surya.ramshere@gmail.com',
+      pass: 'sakuragi291106'
+    }
+  });
+
+  var mailOptions = {
+    from: 'Surya Surakhman <surya.ramshere@gmail.com>',
+    to: user.email,
+    subject: 'Terima kasih telah mendaftar di situs kami',
+    html: '<a href="'+ link +'">Klik Di sini untuk konfirmasi</a>'
+  }
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          return console.log(error);
+      }
+      console.log('Message sent: ' + info.response);
+  });
+
 };

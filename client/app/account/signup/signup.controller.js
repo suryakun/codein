@@ -5,6 +5,10 @@ angular.module('App')
     $scope.user = {};
     $scope.errors = {};
 
+    $scope.sendMail = function() {
+      
+    }
+
     $scope.register = function(form) {
       $scope.submitted = true;
 
