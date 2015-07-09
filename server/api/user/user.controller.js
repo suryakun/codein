@@ -122,12 +122,12 @@ exports.authCallback = function(req, res, next) {
 /**
  * Send mail register for verification
  */
-exports.sendMail = function(req, res, next) {
+exports.sendMail = function(req, res) {
   var user = req.body;
   var encrypted = encrypt(user.email);
-  var link = req.headers.host + encrypted;
+  var link = req.protocol + '://' + req.get('host') + '/api/users/verify?key=' + encrypted;
 
-  var transport = nodemailer.createTransport({
+  var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
       user: 'surya.ramshere@gmail.com',
@@ -145,9 +145,20 @@ exports.sendMail = function(req, res, next) {
   // send mail with defined transport object
   transporter.sendMail(mailOptions, function(error, info){
       if(error){
-          return console.log(error);
+        return console.log(error);
       }
-      console.log('Message sent: ' + info.response);
+      res.send(link);
   });
+};
 
+/**
+ * Verify email address before register
+ */
+exports.verify = function(req, res, next) {
+  var key = req.params.key;
+  var decrypted = decrypt(key);
+  User.findOne({email: decrypted}, function(err, user) {
+    if (!user) res.send(403);
+    res.send('verified');
+  });
 };

@@ -141,7 +141,7 @@ angular.module('App')
        */
       getToken: function() {
         return $cookieStore.get('token');
-      }
+      },
 
       sendMail: function() {
         

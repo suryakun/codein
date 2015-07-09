@@ -81,6 +81,7 @@ angular.module('App')
       $scope.setForm();
       $scope.formList.$setPristine();
       angular.element(".progress-bar").css('width','0%');
+      $scope.isDiggest = false;
     }
 
   });
