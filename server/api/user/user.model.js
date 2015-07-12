@@ -19,7 +19,12 @@ var UserSchema = new Schema({
   facebook: {},
   twitter: {},
   google: {},
-  github: {}
+  github: {},
+  language_code: String,
+  level: String,
+  type: String,
+  product_interest: String,
+  verified: Boolean
 });
 
 /**

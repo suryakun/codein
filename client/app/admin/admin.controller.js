@@ -37,6 +37,8 @@ angular.module('App')
       $scope.buttonSave = true;
       angular.element("input").val('');
       angular.element("textarea").val('');
+      $scope.formList.$setPristine();
+      $scope.form = {};
     }
 
     $scope.save = function(form, formList) {
@@ -79,7 +81,6 @@ angular.module('App')
 
     $scope.reloadForm = function(formList) {
       $scope.setForm();
-      $scope.formList.$setPristine();
       angular.element(".progress-bar").css('width','0%');
       $scope.isDiggest = false;
     }

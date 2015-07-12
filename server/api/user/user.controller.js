@@ -29,6 +29,37 @@ var validationError = function(res, err) {
 };
 
 /**
+ * Send mail register for verification
+ */
+var sendMail = function(req) {
+  var user = req.body;
+  var encrypted = encrypt(user.email);
+  var link = req.protocol + '://' + req.get('host') + '/api/users/verify?key=' + encrypted;
+
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'surya.ramshere@gmail.com',
+      pass: 'sakuragi291106'
+    }
+  });
+
+  var mailOptions = {
+    from: 'Surya Surakhman <surya.ramshere@gmail.com>',
+    to: user.email,
+    subject: 'Terima kasih telah mendaftar di situs kami',
+    html: '<a href="'+ link +'">Klik Di sini untuk konfirmasi</a>'
+  }
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+        return console.log(error);
+      }
+  });
+};
+
+/**
  * Get list of users
  * restriction: 'admin'
  */
@@ -43,11 +74,20 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function (req, res, next) {
+  var id = new Date().getTime() * 1000;
   var newUser = new User(req.body);
+  newUser._id = Math.floor(id);
   newUser.provider = 'local';
   newUser.role = 'user';
+  newUser.language_code = '';
+  newUser.level = '';
+  newUser.type = '';
+  newUser.product_interest = '';
+  newUser.verified = false;
+  console.log(req.body);
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
+    sendMail(req);
     var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     res.json({ token: token });
   });
@@ -120,38 +160,6 @@ exports.authCallback = function(req, res, next) {
 };
 
 /**
- * Send mail register for verification
- */
-exports.sendMail = function(req, res) {
-  var user = req.body;
-  var encrypted = encrypt(user.email);
-  var link = req.protocol + '://' + req.get('host') + '/api/users/verify?key=' + encrypted;
-
-  var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: 'surya.ramshere@gmail.com',
-      pass: 'sakuragi291106'
-    }
-  });
-
-  var mailOptions = {
-    from: 'Surya Surakhman <surya.ramshere@gmail.com>',
-    to: user.email,
-    subject: 'Terima kasih telah mendaftar di situs kami',
-    html: '<a href="'+ link +'">Klik Di sini untuk konfirmasi</a>'
-  }
-
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-        return console.log(error);
-      }
-      res.send(link);
-  });
-};
-
-/**
  * Verify email address before register
  */
 exports.verify = function(req, res, next) {
@@ -159,6 +167,10 @@ exports.verify = function(req, res, next) {
   var decrypted = decrypt(key);
   User.findOne({email: decrypted}, function(err, user) {
     if (!user) res.send(403);
-    res.send('verified');
+    user.verified = true;
+    user.save(function(err) {
+      if (err) return false;
+      res.redirect('/');
+    });
   });
 };

@@ -5,13 +5,16 @@ angular.module('App')
     $scope.user = {};
     $scope.errors = {};
 
-    $scope.sendMail = function() {
-      
-    }
+    angular.element("input").bind("keydown", function() {
+      angular.element(".confirm-error").addClass("hide");
+    });
 
     $scope.register = function(form) {
       $scope.submitted = true;
-
+      if ($scope.user.password !== $scope.user.confirm) {
+        angular.element(".confirm-error").removeClass("hide");
+        return false 
+      };
       if(form.$valid) {
         Auth.createUser({
           name: $scope.user.name,

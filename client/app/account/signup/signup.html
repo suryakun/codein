@@ -13,22 +13,31 @@
                 </div>
             </div>
         </div>
-        <div class="section">
+        <div class="section" ng-controller="SignupCtrl">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <form role="form">
+                        <form role="form" name="form" novalidate>
                             <div class="form-group">
                                 <label class="control-label" for="exampleInputEmail1">Email address</label>
-                                <input class="form-control" id="exampleInputEmail1"
-                                placeholder="Enter email" type="email">
+                                <input class="form-control" id="exampleInputEmail1" name="email" 
+                                placeholder="Enter email" type="email" ng-model="user.email" required>
+                                <div ng-show="form.email.$error.required && form.email.$dirty" class="alert alert-danger">Email ini harus di isi</div>
+                                <div ng-show="form.email.$error.email && form.email.$dirty" class="alert alert-danger">Silahkan masukkan email yang valid</div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label" for="exampleInputPassword1">Password</label>
-                                <input class="form-control" id="exampleInputPassword1"
-                                placeholder="Password" type="password">
+                                <input class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" type="password" ng-model="user.password" minlength="6" maxlength="20" required>
+                                <div ng-show="form.password.$error.required && form.password.$dirty" class="alert alert-danger">Password ini harus di isi</div>
+                                <div ng-show="form.password.$error.minlength && form.password.$dirty" class="alert alert-danger">Password harus lebih dari 6 karakter</div>
                             </div>
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <div class="form-group">
+                                <label class="control-label" for="exampleInputPassword1">Confirm Password</label>
+                                <input class="form-control" id="confirmpassword" name="confirm" placeholder="Confirm Password" type="password" ng-model="user.confirm" required>
+                                <div ng-show="form.confirm.$error.required && form.confirm.$dirty" class="alert alert-danger">Confirm password ini harus di isi</div>
+                                <div class="alert alert-danger hide confirm-error">Password dan Confirm password tidak sama</div>
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="register(form)" ng-disabled="form.$invalid">Submit</button>
                         </form>
                     </div>
                 </div>
