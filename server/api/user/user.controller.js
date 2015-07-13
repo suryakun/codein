@@ -34,7 +34,7 @@ var validationError = function(res, err) {
 var sendMail = function(req) {
   var user = req.body;
   var encrypted = encrypt(user.email);
-  var link = req.protocol + '://' + req.get('host') + '/api/users/verify?key=' + encrypted;
+  var link = req.protocol + '://' + req.get('host') + '/api/users/verify/' + encrypted;
 
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -162,7 +162,7 @@ exports.authCallback = function(req, res, next) {
 /**
  * Verify email address before register
  */
-exports.verify = function(req, res, next) {
+exports.verify = function(req, res) {
   var key = req.params.key;
   var decrypted = decrypt(key);
   User.findOne({email: decrypted}, function(err, user) {

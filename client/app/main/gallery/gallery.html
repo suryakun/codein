@@ -20,7 +20,7 @@
         </div>
         <div class="row">
             <div class="col-md-4" ng-repeat="gallery in galleries">
-                <a href="/list/{{gallery.state}}"><img ng-src="{{gallery.image}}" class="img-responsive image-gallery"></a>
+                <a href="/list/{{gallery._id}}"><img ng-src="{{gallery.image}}" class="img-responsive image-gallery"></a>
                 <h3>{{gallery.name}}</h3>
                 <p>{{gallery.info}}</p>
             </div>            
