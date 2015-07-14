@@ -19,7 +19,7 @@ angular.module('App')
       	controller: 'ListCtrl'
       })
       .state('show', {
-      	url: '/show',
+      	url: '/show/:id',
       	templateUrl: 'app/main/show/show.html',
       	controller: 'ShowCtrl'
       });
