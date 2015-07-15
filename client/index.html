@@ -18,11 +18,13 @@
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <script src="http://cdn.dashjs.org/latest/dash.all.js"></script>
+    
       <!-- injector:css -->
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
-  <body ng-app="App">
+  <body ng-app="App" onLoad="Dash.createAll()">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
