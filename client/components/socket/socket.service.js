@@ -88,6 +88,16 @@ angular.module('App')
         socket.on(modelName + ':remove', function(item){
           _.remove(array, {_id: item._id});
         });
+      },
+
+      joinroom: function(list_id) {
+        console.log(list_id);
+        socket.emit('subscribe', list_id);
+      },
+
+      leaveroom: function(list_id) {
+        socket.emit('unsubscribe', list_id);
       }
+
     };
   });

@@ -32,8 +32,10 @@ exports.create = function(req, res) {
 
   form.parse(req, function(err, fields, files) {
     var increment = new Date().getTime() / 1000;
-    var filename = fields.title[0] + '_' + Math.floor(increment);
-    var dir_upload = path.resolve(__dirname, '../../upload/'+ user._id);
+    var sanitize = fields.title[0];
+    sanitize = sanitize.replace(' ','_');
+    var filename = sanitize + '_' + Math.floor(increment);
+    var dir_upload = path.resolve(__dirname, '../../../client/assets/upload/'+ user._id);
     var dir_file = dir_upload +'/' + filename + ".mp4";
 
     if (err) res.send(500, 'Error Server');

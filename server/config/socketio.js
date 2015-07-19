@@ -11,16 +11,18 @@ function onDisconnect(socket) {
 }
 
 // When the user connects.. perform this
-function onConnect(socket) {
+function onConnect(socketio, socket) {
   // When the client emits 'info', this listens and executes
   socket.on('info', function (data) {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
 
   // Insert sockets below
+  require('../api/chat/chat.socket').register(socketio, socket);
   require('../api/list/list.socket').register(socket);
   require('../api/gallery/gallery.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
+  require('../api/chat/chat.socket').room(socket);
 }
 
 module.exports = function (socketio) {
@@ -53,7 +55,7 @@ module.exports = function (socketio) {
     });
 
     // Call onConnect.
-    onConnect(socket);
+    onConnect(socketio, socket);
     console.info('Socket [%s] CONNECTED', socket.address);
   });
 };

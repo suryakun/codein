@@ -21,6 +21,7 @@ angular.module('App')
       .state('show', {
       	url: '/show/:id',
       	templateUrl: 'app/main/show/show.html',
-      	controller: 'ShowCtrl'
+      	controller: 'ShowCtrl',
+        authenticate: true
       });
   });
