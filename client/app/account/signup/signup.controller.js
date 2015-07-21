@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('App')
-  .controller('SignupCtrl', function ($scope, Auth, $location, $window) {
+  .controller('SignupCtrl', function ($scope, Auth, $location, $window, $http) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -35,6 +35,10 @@ angular.module('App')
             $scope.errors[field] = error.message;
           });
         });
+      }
+
+      $scope.facebookAuth = function() {
+        
       }
     };
 

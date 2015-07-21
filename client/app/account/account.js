@@ -18,5 +18,15 @@ angular.module('App')
         templateUrl: 'app/account/settings/settings.html',
         controller: 'SettingsCtrl',
         authenticate: true
+      })
+      .state('authFacebook', {
+        url: '/auth/facebook',
+        templateUrl: 'app/account/signup/signup.html',
+        controller: 'SignupCtrl',
+        resolve: {
+          'urlFix': ['$location', function($location){
+              $location.url($location.url().replace("#","?"));
+          }]
+        }
       });
   });
