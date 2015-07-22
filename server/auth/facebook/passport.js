@@ -16,9 +16,12 @@ exports.setup = function (User, config) {
           return done(err);
         }
         if (!user) {
+          var id = new Date().getTime() * 1000;
+          var _id = Math.floor(id);
           user = new User({
+            _id: _id,
             name: profile.displayName,
-            email: profile.emails[0].value,
+            email: profile.emails && profile.emails.length ?  profile.emails[0].value : '',
             role: 'user',
             username: profile.username,
             provider: 'facebook',
