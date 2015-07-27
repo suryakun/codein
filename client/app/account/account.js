@@ -14,7 +14,7 @@ angular.module('App')
         controller: 'SignupCtrl'
       })
       .state('settings', {
-        url: '/settings',
+        url: '/profile/:id',
         templateUrl: 'app/account/settings/settings.html',
         controller: 'SettingsCtrl',
         authenticate: true

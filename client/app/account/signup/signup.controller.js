@@ -39,10 +39,6 @@ angular.module('App')
 
     };
 
-    $scope.facebookAuth = function() {
-      $window.location.href = '/auth/facebook';
-    }
-
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;
     };

@@ -14,5 +14,6 @@ router.put('/:id/password', auth.isAuthenticated(), controller.changePassword);
 router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.get('/verify/:key', controller.verify);
+router.post('/pic_upload', auth.isAuthenticated(), controller.pic_upload);
 
 module.exports = router;

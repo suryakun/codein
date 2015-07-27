@@ -5,6 +5,9 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var nodemailer = require('nodemailer');
+var multiparty = require('multiparty');
+var path = require('path');
+var fs = require('fs');
 var crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
     password = 'ilovejavascript';
@@ -174,3 +177,31 @@ exports.verify = function(req, res) {
     });
   });
 };
+
+/**
+ * Upload user's profile picture
+ */
+exports.pic_upload = function(req, res) {
+  var user = req.user;
+  var form = new multiparty.Form(); 
+  form.parse(req, function(err, fields, files) {
+    if (err) res.send(500);
+    var increment = new Date().getTime() / 1000;    
+    var filename = 'image' + Math.floor(increment);
+    var dir_upload = path.resolve(__dirname, '../../../client/assets/images/profile/'+ user._id);
+    var dir_file = dir_upload +'/' + filename + ".png";
+    fs.exists( dir_upload , function(exist) {
+      if (!exist) {
+        fs.mkdirSync(dir_upload);            
+      }
+      fs.createReadStream(files.image[0].path).pipe(fs.createWriteStream(dir_file));
+      User.findById(user._id, function(err, user) {
+        user.picture_path = filename + '.png';
+        user.save(function(err) {
+          res.send(500, 'error server');
+        });
+      });
+    });
+  });
+  res.send(201,'created');
+}

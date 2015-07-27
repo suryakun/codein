@@ -11,7 +11,10 @@ angular.module('App')
       .state('gallery', {
       	url: '/gallery',
       	templateUrl: 'app/main/gallery/gallery.html',
-      	controller: 'GalleryCtrl'
+      	controller: 'GalleryCtrl',
+        ncyBreadcrumb: {
+          label: 'Gallery Screencast'
+        }
       })
       .state('list', {
       	url: '/list/:id',

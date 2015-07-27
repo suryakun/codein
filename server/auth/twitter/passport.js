@@ -15,7 +15,10 @@ exports.setup = function (User, config) {
         return done(err);
       }
       if (!user) {
+        var id = new Date().getTime() * 1000;
+        var _id = Math.floor(id);
         user = new User({
+          _id: _id,
           name: profile.displayName,
           username: profile.username,
           role: 'user',

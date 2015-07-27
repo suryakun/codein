@@ -48,8 +48,8 @@ var all = {
   },
 
   twitter: {
-    clientID:     process.env.TWITTER_ID || 'id',
-    clientSecret: process.env.TWITTER_SECRET || 'secret',
+    clientID:     process.env.TWITTER_ID || '9eYvVdfu0nKYJfzeuZgi1a4gE',
+    clientSecret: process.env.TWITTER_SECRET || 'ta6Mb7TDTFZzoXcFVzZoQU72I4sugA2Tc5v77yL9mDPj2rzABd',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
   },
 

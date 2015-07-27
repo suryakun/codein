@@ -7,14 +7,19 @@ angular.module('App', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'angularUtils.directives.dirPagination'
+  'angularUtils.directives.dirPagination',
+  'ncy-angular-breadcrumb',
+  'ngImgCrop'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $breadcrumbProvider) {
     $urlRouterProvider
       .otherwise('/');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
+    $breadcrumbProvider.setOptions({
+      template: '<ul class="breadcrumb"><li ng-repeat="step in steps"><a href="{{step.ncyBreadcrumbLink}}">{{step.ncyBreadcrumbLabel}}</a></li></ul>'
+    });
   })
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
