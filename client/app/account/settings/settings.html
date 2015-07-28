@@ -21,8 +21,8 @@
                                 </div>
                                 <div class="panel-body">
                                     <ul class="list-group">
-                                        <li class="list-group-item">Nama: Surya</li>
-                                        <li class="list-group-item">Email: surya@gmail.com</li>                                        
+                                        <li class="list-group-item">Nama: {{user.name}}</li>
+                                        <li class="list-group-item">Email: {{user.email}}</li>                                        
                                     </ul>
                                 </div>
                             </div>
@@ -33,22 +33,19 @@
                                 <div class="panel-body">
                                     <span class="panel-header strong">Bahasa pemrograman yang disukai</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Java</li>
-                                        <li class="list-group-item">PHP</li>                                        
-                                        <li class="list-group-item">Ruby</li>                                        
+                                        <li class="list-group-item" ng-repeat="codes in user.language_code">{{codes || ''}}</li>
                                     </ul>
                                     <span class="panel-header strong">Level</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Beginner</li>                                        
+                                        <li class="list-group-item">{{user.level || ''}}</li>                                        
                                     </ul>
                                     <span class="panel-header strong">Platform yang disukai</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Website</li>                                        
+                                        <li class="list-group-item">{{user.product_interest || ''}}</li>                                        
                                     </ul>
                                     <span class="panel-header strong">Lagu yang disukai saat coding</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item">Jepang</li>
-                                        <li class="list-group-item">Indonesia</li>
+                                        <li class="list-group-item" ng-repeat="song in user.songs">{{song || ''}}</li>
                                     </ul>
                                 </div>
                             </div>

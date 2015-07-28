@@ -21,10 +21,12 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  language_code: String,
+  language_code: [],
   level: String,
   type: String,
   product_interest: String,
+  songs: [],
+  snack: [],
   verified: Boolean
 });
 

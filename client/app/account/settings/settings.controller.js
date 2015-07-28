@@ -2,14 +2,19 @@
 
 angular.module('App')
   .controller('SettingsCtrl', function ($scope, User, Auth, $http, $cookieStore, $stateParams) {
+
+    $scope.user = [];
+    var current_user = Auth.getCurrentUser();
+    var userid = $stateParams.id;
+    var isOwner = (current_user._id == userid );
     $scope.errors = {};
     $scope.showCropSection = false;
 
     $scope.dataUser = {}
 
-    // $http.get().success(function(data){
-      
-    // })
+    $http.get('/api/users/'+userid).success(function(data){
+      $scope.user = data;
+    });
 
     /*
     * Change Password function
