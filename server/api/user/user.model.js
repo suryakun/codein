@@ -50,7 +50,14 @@ UserSchema
   .get(function() {
     return {
       'name': this.name,
-      'role': this.role
+      'role': this.role,
+      'picture_path': this.picture_path,      
+      'language_code': this.language_code,
+      'level': this.level,
+      'type': this.type,
+      'product_interest': this.product_interest,
+      'songs': this.songs,
+      'snack': this.snack,
     };
   });
 

@@ -13,7 +13,9 @@ angular.module('App')
     $scope.dataUser = {}
 
     $http.get('/api/users/'+userid).success(function(data){
+      $scope._id = current_user._id;
       $scope.user = data;
+      $scope.user.picture_path = '/assets/images/profile/' + current_user._id + '/' + data.picture_path;
     });
 
     /*
