@@ -6,11 +6,17 @@ angular.module('App')
     $scope.user = [];
     var current_user = Auth.getCurrentUser();
     var userid = $stateParams.id;
-    var isOwner = (current_user._id == userid );
+    $scope.isOwner = (current_user._id == userid );
+    console.log($scope.isOwner);
     $scope.errors = {};
     $scope.showCropSection = false;
+    $scope.editable = false;
 
     $scope.dataUser = {}
+
+    $scope.setEditable = function(){
+      $scope.editable = true;
+    }
 
     $http.get('/api/users/'+userid).success(function(data){
       $scope._id = current_user._id;

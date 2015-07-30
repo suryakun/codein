@@ -11,18 +11,21 @@
                     </li>
                     <li class="active">Data</li>
                 </ul>
-                <h1>Heading</h1>
+                <h1>
+                    Heading
+                    <button class="btn btn-default" ng-if="isOwner && !editable" ng-click="setEditable()">Edit</button>
+                </h1>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-9">
+                        <div class="col-md-9">                            
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Profil</h3>
                                 </div>
                                 <div class="panel-body">
                                     <ul class="list-group">
-                                        <li class="list-group-item">Nama: {{user.name}}</li>
-                                        <li class="list-group-item">Email: {{user.email}}</li>                                        
+                                        <li ng-hide="editable" class="list-group-item">Nama: {{user.name}}</li>
+                                        <li ng-show="editable" class="list-group-item">Nama: <input class="form-control" name="name" ng-model="user.name" /></li>
                                     </ul>
                                 </div>
                             </div>
@@ -33,19 +36,36 @@
                                 <div class="panel-body">
                                     <span class="panel-header strong">Bahasa pemrograman yang disukai</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item" ng-repeat="codes in user.language_code">{{codes || ''}}</li>
+                                        <li ng-hide="editable" class="list-group-item" ng-repeat="codes in user.language_code">{{codes || ''}}</li>
+                                        <li ng-show="editable" class="list-group-item"><input class="form-control" name="code" ng-model="user.language_code" /></li>
                                     </ul>
                                     <span class="panel-header strong">Level</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item">{{user.level || ''}}</li>                                        
+                                        <li ng-hide="editable" class="list-group-item">{{user.level || ''}}</li>
+                                        <li ng-show="editable" class="list-group-item" >
+                                            <select class="form-control" name="level" ng-model="user.level">
+                                                <option class="">Junior</option>
+                                                <option class="">Senior</option>
+                                                <option class="">Expert</option>
+                                                <option class="">Ninja</option>
+                                                <option class="">Master</option>
+                                                <option class="">Monster</option>
+                                            </select>
+                                        </li>
                                     </ul>
                                     <span class="panel-header strong">Platform yang disukai</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item">{{user.product_interest || ''}}</li>                                        
+                                        <li ng-hide="editable" class="list-group-item">{{user.product_interest || ''}}</li>
+                                        <li ng-show="editable" class="list-group-item" >
+                                            <input class="form-control" name="product_interest" ng-model="user.product_interest" />
+                                        </li>
                                     </ul>
                                     <span class="panel-header strong">Lagu yang disukai saat coding</span>
                                     <ul class="list-group">
-                                        <li class="list-group-item" ng-repeat="song in user.songs">{{song || ''}}</li>
+                                        <li ng-hide="editable" class="list-group-item" ng-repeat="song in user.songs">{{song || ''}}</li>
+                                        <li ng-show="editable" class="list-group-item" ng-repeat="song in user.songs">
+                                            <input class="form-control" name="songs" ng-model="user.songs" />
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
