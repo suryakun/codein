@@ -8,6 +8,7 @@ var nodemailer = require('nodemailer');
 var multiparty = require('multiparty');
 var path = require('path');
 var fs = require('fs');
+var _ = require('underscore');
 var crypto = require('crypto'),
     algorithm = 'aes-256-ctr',
     password = 'ilovejavascript';
@@ -87,7 +88,6 @@ exports.create = function (req, res, next) {
   newUser.type = '';
   newUser.product_interest = '';
   newUser.verified = false;
-  console.log(req.body);
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
     sendMail(req);
@@ -198,10 +198,19 @@ exports.pic_upload = function(req, res) {
       User.findById(user._id, function(err, user) {
         user.picture_path = filename + '.png';
         user.save(function(err) {
-          res.send(500, 'error server');
+          if (err) res.send(500, 'error server');
+          res.send(201, user.picture_path );
         });
       });
     });
   });
-  res.send(201,'created');
+}
+
+exports.update = function(req, res){
+  var newuser = req.body;
+  User.findById(newuser._id, function(err, user){
+    user = _.extend(user, newuser);    
+    user.save();
+  });
+  res.send(200, 'Updated');
 }

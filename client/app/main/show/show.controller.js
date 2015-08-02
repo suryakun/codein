@@ -19,7 +19,7 @@ angular.module('App')
     	});
 
     $scope.addChat = function() {
-        if ($scope.chat.content == null) return false;
+        if ($scope.chat.content == '') return false;
         var data = {
             content: $scope.chat.content,
             user: user,
@@ -28,7 +28,6 @@ angular.module('App')
 
     	chat.insertChat(data)
             .success(function() {
-                console.log('sent');
                 $scope.chat.content = '';
             });
     }

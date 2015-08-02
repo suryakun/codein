@@ -14,6 +14,7 @@
                 <h1>
                     Heading
                     <button class="btn btn-default" ng-if="isOwner && !editable" ng-click="setEditable()">Edit</button>
+                    <button class="btn btn-default" ng-if="isOwner && editable" ng-click="updateProfile(user)">Save</button>
                 </h1>
                 <div class="row">
                     <div class="col-md-12">
@@ -36,8 +37,14 @@
                                 <div class="panel-body">
                                     <span class="panel-header strong">Bahasa pemrograman yang disukai</span>
                                     <ul class="list-group">
-                                        <li ng-hide="editable" class="list-group-item" ng-repeat="codes in user.language_code">{{codes || ''}}</li>
-                                        <li ng-show="editable" class="list-group-item"><input class="form-control" name="code" ng-model="user.language_code" /></li>
+                                        <li ng-show="editable && user.language_code.length < 5" class="list-group-item">
+                                            <input class="form-control" name="songs" ng-model="varcode" />
+                                            <button class="btn btn-default" ng-click="addToArray(user.language_code, varcode)">Tambah</button>
+                                        </li>
+                                        <li class="list-group-item" ng-repeat="code in user.language_code track by $index">
+                                            {{code || 'None'}}
+                                            <a href="" ng-show="editable" ng-click="removeFromArray(user.language_code, $index)" class="glyphicon glyphicon-remove"></a>
+                                        </li>
                                     </ul>
                                     <span class="panel-header strong">Level</span>
                                     <ul class="list-group">
@@ -55,39 +62,29 @@
                                     </ul>
                                     <span class="panel-header strong">Platform yang disukai</span>
                                     <ul class="list-group">
-                                        <li ng-hide="editable" class="list-group-item">{{user.product_interest || ''}}</li>
+                                        <li ng-hide="editable" class="list-group-item">{{user.product_interest || 'None'}}</li>
                                         <li ng-show="editable" class="list-group-item" >
-                                            <input class="form-control" name="product_interest" ng-model="user.product_interest" />
+                                            <select class="form-control" name="product_interest" ng-model="user.product_interest" >
+                                                <option class="">Desktop</option>
+                                                <option class="">Mobile</option>
+                                                <option class="">Website</option>
+                                                <option class="">IoT</option>                                                
+                                            </select>
                                         </li>
                                     </ul>
                                     <span class="panel-header strong">Lagu yang disukai saat coding</span>
                                     <ul class="list-group">
-                                        <li ng-hide="editable" class="list-group-item" ng-repeat="song in user.songs">{{song || ''}}</li>
-                                        <li ng-show="editable" class="list-group-item" ng-repeat="song in user.songs">
-                                            <input class="form-control" name="songs" ng-model="user.songs" />
+                                        <li ng-show="editable && user.songs.length < 5" class="list-group-item">
+                                            <input class="form-control" name="songs" ng-model="varsong" />
+                                            <button class="btn btn-default" ng-click="addToArray(user.songs, varsong)">Tambah</button>
+                                        </li>
+                                        <li class="list-group-item" ng-repeat="song in user.songs track by $index">
+                                            {{song || 'None'}}
+                                            <a href="" ng-show="editable" ng-click="removeFromArray(user.songs, $index)" class="glyphicon glyphicon-remove"></a>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                  <h3 class="panel-title">Screencasts</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <span class="panel-header strong">Screencast yang sudah di upload</span>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Java</li>
-                                        <li class="list-group-item">PHP</li>                                        
-                                        <li class="list-group-item">Ruby</li>                                        
-                                    </ul>
-                                    <span class="panel-header strong">Screencast yang sudah di tonton</span>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Beginner</li>                                        
-                                        <li class="list-group-item">Beginner</li>                                        
-                                        <li class="list-group-item">Beginner</li>                                        
-                                    </ul>                                    
-                                </div>
-                            </div>
+                            </div>                            
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                   <h3 class="panel-title">Atur ulang password</h3>
@@ -129,8 +126,7 @@
                         <div class="col-md-3">
                           <div>
                             <a href="" data-toggle="modal" data-target="#uploadPhoto">
-                              <img src="/assets/images/profile/default.png" width="200px" height="200px" class="img-circle" ng-if="!user.picture_path"/>
-                              <img ng-src="{{user.picture_path}}" width="200px" height="200px" class="img-circle" ng-if="user.picture_path"/>
+                              <img src="{{ user.path }}" width="200px" height="200px" class="img-circle" />                              
                             </a>
                           </div>
                         </div>
