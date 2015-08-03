@@ -15,5 +15,6 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.get('/verify/:key', controller.verify);
 router.post('/pic_upload', auth.isAuthenticated(), controller.pic_upload);
+router.post('/update', auth.isAuthenticated(), controller.update);
 
 module.exports = router;
