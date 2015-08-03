@@ -17,7 +17,8 @@
     <!-- endbuild -->
     <!-- build:css({.tmp,client}) app/app.css -->
     <link rel="stylesheet" href="app/app.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/bootcards/dist/css/bootcards-desktop.min.css">
     <link rel="stylesheet" href="bower_components/video.js/dist/video-js/video-js.css">
     <link rel="stylesheet" href="bower_components/ngImgCrop/compile/minified/ng-img-crop.css">
     
@@ -49,13 +50,13 @@
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-XXXXX-X');
-      ga('send', 'pageview');
+      // ga('create', 'UA-XXXXX-X');
+      // ga('send', 'pageview');
     </script>
 
     <!--[if lt IE 9]>
@@ -82,7 +83,8 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,client}) app/app.js -->
-        <script src="assets/js/bootstrap.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/bootcards/dist/js/bootcards.min.js"></script>
         <script src="assets/js/angular-messages.js"></script>
         <script src="app/app.js"></script>
           <!-- injector:js -->
@@ -109,5 +111,27 @@
           <script src="components/socket/socket.service.js"></script>
           <!-- endinjector -->
         <!-- endbuild -->
+      <script type="text/javascript">
+        /*
+         * Initialize Bootcards.
+         * 
+         * Parameters:
+         * - offCanvasBackdrop (boolean): show a backdrop when the offcanvas is shown
+         * - offCanvasHideOnMainClick (boolean): hide the offcanvas menu on clicking outside the off canvas
+         * - enableTabletPortraitMode (boolean): enable single pane mode for tablets in portraitmode
+         * - disableRubberBanding (boolean): disable the iOS rubber banding effect
+         * - disableBreakoutSelector (string) : for iOS apps that are added to the home screen:
+                              jQuery selector to target links for which a fix should be added to not
+                              allow those links to break out of fullscreen mode.
+         */
+         
+        bootcards.init( {
+          offCanvasBackdrop : true,
+          offCanvasHideOnMainClick : true,
+          enableTabletPortraitMode : true,
+          disableRubberBanding : true,
+          disableBreakoutSelector : 'a.no-break-out'
+        });
+      </script>
 </body>
 </html>
