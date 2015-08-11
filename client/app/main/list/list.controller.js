@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('App')
-  .controller('ListCtrl', function ($scope, $stateParams, $window, gallery, list, Auth) {
+  .controller('ListCtrl', function ($scope, $stateParams, $window, $location, gallery, list, Auth) {
 
   	list.findByGalleryId($stateParams.id)
   		.success(function(data) {
