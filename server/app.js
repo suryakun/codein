@@ -10,6 +10,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var express = require('express');
 var mongoose = require('mongoose');
 var config = require('./config/environment');
+var binaryserver = require('binaryjs').BinaryServer;
+var instanceBinaryJs = binaryserver({port:4000});
 
 // Connect to database
 mongoose.connect(config.mongo.uri, config.mongo.options);
@@ -25,7 +27,7 @@ var socketio = require('socket.io')(server, {
   path: '/socket.io-client'
 });
 require('./config/socketio')(socketio);
-require('./config/binaryserver')(server);
+require('./config/binaryserver')(instanceBinaryJs);
 require('./config/express')(app);
 require('./routes')(app);
 

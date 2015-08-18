@@ -2,11 +2,7 @@
 
 angular.module('App')
   .factory('video', function () {
-    // Service logic
-
-    var meaningOfLife = 42;
-
-    // Public API here
+    
     return {
       download: download,
       request: request,
@@ -32,7 +28,11 @@ angular.module('App')
     }
 
     function request (name) {
-      client.send
+      
+    }
+
+    function upload (client, file) {
+      client.send(file, file);
     }
 
   });
