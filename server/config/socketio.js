@@ -18,6 +18,7 @@ function onConnect(socketio, socket) {
   });
 
   // Insert sockets below
+  require('../api/video/video.socket').register(socket);
   require('../api/chat/chat.socket').register(socketio, socket);
   require('../api/list/list.socket').register(socket);
   require('../api/gallery/gallery.socket').register(socket);

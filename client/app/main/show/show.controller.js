@@ -4,13 +4,11 @@ angular.module('App')
   .controller('ShowCtrl', function ($scope, list, $stateParams, chat, socket, Auth) {
 
     var user = Auth.getCurrentUser();
-    var hostname = window.location.hostname;
-    var client   = new BinaryClient('ws://' + hostname + ':4000');
-
+    
     $scope.chats = [];
 
     // (function(){
-    //     var url = "";
+    //     var url = "http://localhost:8000/api/videos/streaming";
     //     var context = new Dash.di.DashContext();
     //     var player = new MediaPlayer(context);
     //     player.startup();
@@ -42,13 +40,6 @@ angular.module('App')
             .success(function() {
                 $scope.chat.content = '';
             });
-    }
-
-    $scope.emit = function () {
-        var r = document.querySelector("input[type=file]");
-        var file = r.files[0];
-        console.log(file);
-        client.send(file, {t:3, g:'test'});
     }
 
   });
